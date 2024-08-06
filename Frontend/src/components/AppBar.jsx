@@ -61,7 +61,8 @@ const AppBar = () => {
             <Stack>
                 <div onClick={() => {navigate('/')}} style={{ cursor: "pointer" }}>
                     <Typography variant="h3" to="/" color={'#112D4E'}>
-                        <strong><i>Taskify</i></strong>
+                        <strong>Taskify</strong>
+
                     </Typography>
                 </div>
             </Stack>
