@@ -1,10 +1,19 @@
 /* eslint-disable react/prop-types */
-import { Card, Typography, Button, CardContent } from "@mui/material";
+import {
+  Card,
+  Typography,
+  Button,
+  CardContent,
+  useMediaQuery,
+} from "@mui/material";
 
-const Data = ({ todo, onEdit, onDelete, onDone}) => {
+const Data = ({ todo, onEdit, onDelete, onDone }) => {
+  const isMobile = useMediaQuery("(max-width:600px)"); // Detect screen size
+
   const handleEdit = () => {
     onEdit(todo);
   };
+
   const handleDelete = () => {
     onDelete(todo._id);
   };
@@ -17,37 +26,47 @@ const Data = ({ todo, onEdit, onDelete, onDone}) => {
     <Card
       key={todo.id}
       sx={{
-        width: 650,
-        marginBottom: 2,
+        width: isMobile ? "90%" : 650, // Adjust width for mobile
+        marginBottom: 5,
+        // margin: isMobile ? "0 auto" : "initial", // Center the card on mobile
       }}
     >
       <CardContent>
         <Typography
-          variant="h5"
+          variant={isMobile ? "h4" : "h5"}
           sx={{
-            fontWeight: 'bold',
+            fontWeight: "bold",
             marginBottom: 1,
           }}
         >
           {todo.title}
         </Typography>
         <Typography
-          variant="subtitle1"
+          variant={isMobile ? "h6" : "subtitle1"}
           sx={{
             marginBottom: 1,
           }}
         >
           {todo.description}
         </Typography>
-        <div style={{ display: "flex", justifyContent: 'space-between', marginTop: '1%' }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: isMobile ? "center" : "space-between", // Center buttons for mobile
+            flexDirection: isMobile ? "column" : "row", // Stack buttons vertically for mobile
+            gap: isMobile ? "10px" : "initial", // Add gap between buttons on mobile
+            marginTop: "1%",
+          }}
+        >
           <Button
             variant="contained"
             sx={{
-              backgroundColor: 'primary.light',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: 'primary.dark',
+              backgroundColor: "primary.light",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "primary.dark",
               },
+              width: isMobile ? "100%" : "auto", // Full width for buttons on mobile
             }}
             onClick={handleEdit}
           >
@@ -56,11 +75,12 @@ const Data = ({ todo, onEdit, onDelete, onDone}) => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: todo.done ? 'success.light' : 'warning.light',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: todo.done ? 'success.dark' : 'warning.dark',
+              backgroundColor: todo.done ? "success.light" : "warning.light",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: todo.done ? "success.dark" : "warning.dark",
               },
+              width: isMobile ? "100%" : "auto", // Full width for buttons on mobile
             }}
             onClick={handleDone}
           >
@@ -69,11 +89,12 @@ const Data = ({ todo, onEdit, onDelete, onDone}) => {
           <Button
             variant="contained"
             sx={{
-              backgroundColor: 'error.light',
-              color: '#fff',
-              '&:hover': {
-                backgroundColor: 'error.dark',
+              backgroundColor: "error.light",
+              color: "#fff",
+              "&:hover": {
+                backgroundColor: "error.dark",
               },
+              width: isMobile ? "100%" : "auto", // Full width for buttons on mobile
             }}
             onClick={handleDelete}
           >
@@ -83,6 +104,6 @@ const Data = ({ todo, onEdit, onDelete, onDone}) => {
       </CardContent>
     </Card>
   );
-}
+};
 
 export default Data;
